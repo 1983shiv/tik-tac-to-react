@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-// import useWindowSize from "react-use/lib/useWindowSize";
 import Confetti from "react-confetti";
 import "./App.css";
 
@@ -23,6 +22,7 @@ function Square({ value, onSquareClick }) {
 }
 
 function Board() {
+  const [playcount, setPlaycount] = useState(1);
   const [restart, setRestart] = useState(false);
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
@@ -70,6 +70,10 @@ function Board() {
     setXIsNext(!xIsNext);
   };
 
+  const restartGame = () => {
+    setSquares(Array(9).fill(null));
+    setPlaycount((prev) => prev + 1);
+  };
   useEffect(() => {
     if (!hasNullValues(squares)) {
       setRestart(true);
@@ -89,10 +93,7 @@ function Board() {
             width={window.innerWidth || 300}
             height={window.innerWidth || 300}
           />
-          <button
-            onClick={() => setSquares(Array(9).fill(null))}
-            style={{ marginBottom: "10px" }}
-          >
+          <button onClick={restartGame} style={{ marginBottom: "10px" }}>
             Restart the Game
           </button>
         </>
@@ -115,7 +116,7 @@ function Board() {
 
       <div className="footer">
         <p>
-          Source Code :{" "}
+          Total Play Count : {playcount} | Source Code :{" "}
           <a href="https://github.com/1983shiv/tik-tac-to-react">Github</a>
         </p>
       </div>
