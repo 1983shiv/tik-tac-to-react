@@ -1,25 +1,118 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+// import useWindowSize from "react-use/lib/useWindowSize";
+import Confetti from "react-confetti";
+import "./App.css";
 
-function App() {
+const lines = [
+  [0, 1, 2],
+  [3, 4, 5],
+  [6, 7, 8],
+  [0, 3, 6],
+  [1, 4, 7],
+  [2, 5, 8],
+  [0, 4, 8],
+  [2, 4, 6],
+];
+
+function Square({ value, onSquareClick }) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <button className="square" onClick={onSquareClick}>
+      {value}
+    </button>
+  );
+}
+
+function Board() {
+  const [restart, setRestart] = useState(false);
+  const [xIsNext, setXIsNext] = useState(true);
+  const [squares, setSquares] = useState(Array(9).fill(null));
+
+  const calculateWinner = (squares) => {
+    for (let i = 0; i < lines.length; i++) {
+      const [a, b, c] = lines[i];
+      if (
+        squares[a] &&
+        squares[a] === squares[b] &&
+        squares[a] === squares[c]
+      ) {
+        return squares[a];
+      }
+    }
+    return null;
+  };
+
+  const hasNullValues = (arr) => {
+    return arr.some((val) => val === null);
+  };
+
+  const winner = calculateWinner(squares);
+  let status;
+  if (winner) {
+    status = "Winner: " + winner;
+  } else if (!hasNullValues(squares)) {
+    status = "Match Tie";
+  } else {
+    status = "Next player: " + (xIsNext ? "X" : "O");
+  }
+
+  const handleClick = (i) => {
+    if (calculateWinner(squares) || squares[i]) {
+      return;
+    }
+
+    const nextSquares = squares.slice();
+    if (xIsNext) {
+      nextSquares[i] = "X";
+    } else {
+      nextSquares[i] = "O";
+    }
+    setSquares(nextSquares);
+    setXIsNext(!xIsNext);
+  };
+
+  useEffect(() => {
+    if (!hasNullValues(squares)) {
+      setRestart(true);
+    }
+  }, [squares]);
+
+  return (
+    <div
+      className="App"
+      style={{ marginLeft: "auto", marginRight: "auto", padding: "50px" }}
+    >
+      <div className="status">{status}</div>
+      {(calculateWinner(squares) || restart) && (
+        <>
+          <Confetti
+            width={window.innerWidth || 300}
+            height={window.innerWidth || 300}
+          />
+          <button
+            onClick={() => setSquares(Array(9).fill(null))}
+            style={{ marginBottom: "10px" }}
+          >
+            Restart the Game
+          </button>
+        </>
+      )}
+      <div className="board-row">
+        <Square value={squares[0]} onSquareClick={() => handleClick(0)} />
+        <Square value={squares[1]} onSquareClick={() => handleClick(1)} />
+        <Square value={squares[2]} onSquareClick={() => handleClick(2)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[3]} onSquareClick={() => handleClick(3)} />
+        <Square value={squares[4]} onSquareClick={() => handleClick(4)} />
+        <Square value={squares[5]} onSquareClick={() => handleClick(5)} />
+      </div>
+      <div className="board-row">
+        <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
+        <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
+        <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      </div>
     </div>
   );
 }
 
-export default App;
+export default Board;
