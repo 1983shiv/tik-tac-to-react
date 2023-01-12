@@ -24,7 +24,7 @@ function Square({ value, onSquareClick }) {
 function Board() {
   const [playcount, setPlaycount] = useState(() => {
     const initialCount = localStorage.getItem("playcount");
-    return initialCount ? parseInt(initialCount) : 0;
+    return initialCount ? parseInt(initialCount) : 1;
   });
   const [restart, setRestart] = useState(false);
   const [xIsNext, setXIsNext] = useState(true);
