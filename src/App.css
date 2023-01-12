@@ -78,3 +78,10 @@
 .game-info {
   margin-left: 20px;
 }
+
+.footer {
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  padding: 10px 30px;
+  margin-top: 30px;
+}

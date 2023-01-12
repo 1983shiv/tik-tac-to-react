@@ -81,6 +81,7 @@ function Board() {
       className="App"
       style={{ marginLeft: "auto", marginRight: "auto", padding: "50px" }}
     >
+      <h1 style={{ marginBottom: "10px" }}>Tic Tac To Game</h1>
       <div className="status">{status}</div>
       {(calculateWinner(squares) || restart) && (
         <>
@@ -110,6 +111,13 @@ function Board() {
         <Square value={squares[6]} onSquareClick={() => handleClick(6)} />
         <Square value={squares[7]} onSquareClick={() => handleClick(7)} />
         <Square value={squares[8]} onSquareClick={() => handleClick(8)} />
+      </div>
+
+      <div className="footer">
+        <p>
+          Source Code :{" "}
+          <a href="https://github.com/1983shiv/tik-tac-to-react">Github</a>
+        </p>
       </div>
     </div>
   );
