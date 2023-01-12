@@ -22,7 +22,10 @@ function Square({ value, onSquareClick }) {
 }
 
 function Board() {
-  const [playcount, setPlaycount] = useState(1);
+  const [playcount, setPlaycount] = useState(() => {
+    const initialCount = localStorage.getItem("playcount");
+    return initialCount ? parseInt(initialCount) : 0;
+  });
   const [restart, setRestart] = useState(false);
   const [xIsNext, setXIsNext] = useState(true);
   const [squares, setSquares] = useState(Array(9).fill(null));
@@ -74,6 +77,10 @@ function Board() {
     setSquares(Array(9).fill(null));
     setPlaycount((prev) => prev + 1);
   };
+
+  useEffect(() => {
+    localStorage.setItem("playcount", playcount);
+  }, [playcount]);
 
   useEffect(() => {
     if (!hasNullValues(squares)) {
