@@ -73,7 +73,7 @@ function Board() {
   };
 
   const restartGame = () => {
-    totalplaycount = totalplaycount + 1;
+    totalplaycount = parseInt(totalplaycount + 1);
     setSquares(Array(9).fill(null));
     setPlaycount((prev) => prev + 1);
   };
