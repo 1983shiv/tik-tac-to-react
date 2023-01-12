@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import Confetti from "react-confetti";
 import "./App.css";
 
-let totalplaycount;
-
 const lines = [
   [0, 1, 2],
   [3, 4, 5],
@@ -73,7 +71,6 @@ function Board() {
   };
 
   const restartGame = () => {
-    totalplaycount = parseInt(totalplaycount + 1);
     setSquares(Array(9).fill(null));
     setPlaycount((prev) => prev + 1);
   };
@@ -120,7 +117,7 @@ function Board() {
 
       <div className="footer">
         <p>
-          Total Play Count : {totalplaycount} | Source Code :{" "}
+          Play Count : {playcount} | Source Code :{" "}
           <a href="https://github.com/1983shiv/tik-tac-to-react">Github</a>
         </p>
       </div>
