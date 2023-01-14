@@ -7,6 +7,10 @@
 
 ### Tic tac to game developed using React.js and React-confitte, just to learn the gaming and programming logic behind this game.
 
+### Play online
+
+`https://tic-tac-to-game.vercel.app/`
+
 ### want to install and play and add features on it.
 
 ### just follow the following command and you are good to start
