@@ -13,6 +13,16 @@ const lines = [
   [2, 4, 6],
 ];
 
+// function* idMaker() {
+//   let id = 1;
+//   while (true) {
+//     yield id++;
+//   }
+// }
+
+// let gen = idMaker();
+// let playcount;
+
 function Square({ value, onSquareClick }) {
   return (
     <button className="square" onClick={onSquareClick}>
@@ -23,7 +33,7 @@ function Square({ value, onSquareClick }) {
 
 function Board() {
   const [playcount, setPlaycount] = useState(() => {
-    const initialCount = localStorage.getItem("playcount");
+    const initialCount = parseInt(localStorage.getItem("playcount"));
     return initialCount ? parseInt(initialCount) : 1;
   });
   const [restart, setRestart] = useState(false);
@@ -74,12 +84,16 @@ function Board() {
   };
 
   const restartGame = () => {
+    // playcount = gen.next().value; // → 1
     setSquares(Array(9).fill(null));
     setPlaycount((prev) => prev + 1);
+    setRestart(false);
   };
 
   useEffect(() => {
+    // playcount = gen.next().value; // → 1
     localStorage.setItem("playcount", playcount);
+    // console.log("playcount", playcount);
   }, [playcount]);
 
   useEffect(() => {
@@ -124,7 +138,7 @@ function Board() {
 
       <div className="footer">
         <p>
-          Play Count : {playcount} | Source Code :{" "}
+          Your Play Count : {playcount ? playcount : 1} | Source Code :{" "}
           <a href="https://github.com/1983shiv/tik-tac-to-react">Github</a>
         </p>
       </div>
